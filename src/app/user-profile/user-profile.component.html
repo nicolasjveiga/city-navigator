@@ -1,14 +1,5 @@
-<div class="p-4 max-w-sm mx-auto bg-slate-800 rounded-xl shadow-md space-y-4 flex flex-col items-center">
-    <img 
-    [src]="imagemUrl" 
-    alt="Imagem dinamica" 
-    class="w-80 h-64 mx-auto rounded-lg shadow">
-
-    <button 
-    (click)="trocarImagem()" 
-    class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font bold py-2 px-4 rounded mx-auto">
-        Trocar Imagem
-    </button>
-
-
+<div class="p-4 max-w-md mx-auto bg-white rounded shadow-md">
+    <h2 class="text-x1 font-bold mb-2">User Profile</h2>
+    <p><strong>Nome:</strong> {{userName }}</p>
+    <p><strong>Email:</strong> {{ userEmail }}</p>
 </div>
