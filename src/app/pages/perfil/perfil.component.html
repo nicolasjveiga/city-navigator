@@ -1,0 +1,105 @@
+<div class="bg-white flex justify-center items-center min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+      Cadastro de usuário
+    </h2>
+
+    <p *ngIf="userId" class="text-center text-sm text-gray-600 mb-4">
+      Exibindo dados do usuário com ID: <strong>{{ userId }}</strong>
+    </p>
+
+    <!-- Formulário -->
+    <form class="space-y-4" #form="ngForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          [(ngModel)]="user.nome"
+          required
+          placeholder="Digite seu nome"
+          class="w-full bg-white border-gray-700 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+          placeholder="Digite seu email"
+          class="w-full bg-white border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="user.password"
+          required
+          minlength="6"
+          placeholder="Digite sua senha"
+          class="w-full bg-white border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <div>
+        <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Senha</label>
+        <input
+          id="confirm-password"
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="user.confirmPassword"
+          required
+          minlength="6"
+          placeholder="Confirme sua senha"
+          class="w-full bg-white border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <div *ngIf="passwordMismatch" class="text-red-500 text-sm">
+        As senhas não são iguais.
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="w-full bg-ciano text-white font-semibold py-2 px-4 rounded-lg focus:ring-2 focus:ring-blue-300"
+
+          [disabled]="!form.valid"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+
+   
+    <div *ngIf="usuarios.length > 0" class="mt-8">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">Usuários Cadastrados:</h3>
+      <ul>
+        <li
+          *ngFor="let usuario of usuarios; index as i"
+          class="flex justify-between items-center text-gray-700 border-b py-2"
+        >
+          <div>
+            <strong>Nome:</strong> {{ usuario.nome }} <br />
+            <strong>Email:</strong> {{ usuario.email }}
+          </div>
+          <button
+            class="text-red-500 hover:underline"
+            (click)="removeUser(i)"
+          >
+            Remover
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
