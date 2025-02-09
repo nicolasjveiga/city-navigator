@@ -5,15 +5,17 @@ module.exports = {
   ],
   theme: {
     colors: {
-      tranparent: 'tranparent',
+      transparent: 'transparent',
       current: 'currentColor',
       'white': '#ffffff',
+      'black': '#000000',
       'ciano': '#1abc9c',
     },
-    extend: {},
-    
+    extend: {
+      fontFamily: {
+        oswald: ["Oswald", "sans-serif"], 
+      }
+    },
   },
   plugins: [require('daisyui')],
- 
 }
-

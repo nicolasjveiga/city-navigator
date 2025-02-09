@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-perfil',
@@ -11,47 +12,48 @@ import { FormsModule } from '@angular/forms';
   styles: [],
 })
 export class PerfilComponent {
+  private http = inject(HttpClient);
   userId: string | null = null;
 
-  user = { nome: '', email: '', password: '', confirmPassword: '' }; // Dados do formulário
-  usuarios: Array<{ nome: string; email: string }> = []; // Lista de usuários cadastrados
-  passwordMismatch = false; // Controle para verificar senhas diferentes
+  user = { nome: '', email: '', password: '', confirmPassword: '' };
+  usuarios: Array<{ nome: string; email: string }> = [];
+  passwordMismatch = false;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
-
-    // Carregar usuários salvos no localStorage
     const storedUsers = localStorage.getItem('usuarios');
     if (storedUsers) {
       this.usuarios = JSON.parse(storedUsers);
     }
   }
 
-  onSubmit() {
-    // Verificar se as senhas coincidem
+  async onSubmit() {
     if (this.user.password !== this.user.confirmPassword) {
       this.passwordMismatch = true;
       return;
     }
     this.passwordMismatch = false;
 
-    // Salvar usuário na lista
-    this.usuarios.push({ nome: this.user.nome, email: this.user.email });
+    const newUser = { nome: this.user.nome, email: this.user.email };
 
-    // Atualizar localStorage
+    this.usuarios.push(newUser);
     localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
 
-    // Limpar formulário
+
+    try {
+      const response = await this.http.post("http://localhost:3000/usuarios", newUser).toPromise();
+      console.log("Usuário cadastrado com sucesso:", response);
+    } catch (error) {
+      console.error("Erro ao cadastrar usuário:", error);
+    }
+
     this.user = { nome: '', email: '', password: '', confirmPassword: '' };
   }
 
   removeUser(index: number) {
-    // Remover usuário da lista
     this.usuarios.splice(index, 1);
-
-    // Atualizar localStorage
     localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
   }
 }
