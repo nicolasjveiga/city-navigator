@@ -1,0 +1,23 @@
+<!-- login.component.html -->
+<div class="container mx-auto p-6 max-w-md">
+    <h2 class="text-2xl font-bold text-black mb-6 text-center">Login</h2>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required
+               class="w-full border rounded-lg p-2"/>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required
+               class="w-full border rounded-lg p-2"/>
+      </div>
+      <button type="submit"
+              [disabled]="!loginForm.valid"
+              class="w-full bg-ciano text-white py-2 rounded-lg hover:bg-blue-600">
+        Entrar
+      </button>
+    </form>
+    <p *ngIf="errorMessage" class="text-red-500 mt-4 text-center">{{ errorMessage }}</p>
+  </div>
+  

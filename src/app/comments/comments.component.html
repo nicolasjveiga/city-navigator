@@ -1,0 +1,24 @@
+<!-- comentarios.component.html -->
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold text-black mb-4">Comentários</h2>
+    
+    <!-- Formulário para postar um comentário (aparece apenas se o usuário estiver logado) -->
+    <div *ngIf="isLoggedIn | async" class="mb-6">
+      <textarea [(ngModel)]="newComment" placeholder="Escreva seu comentário"
+                class="w-full border rounded-lg p-2"></textarea>
+      <button (click)="postComment()" class="mt-2 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">
+        Postar Comentário
+      </button>
+    </div>
+  
+    <!-- Lista de comentários -->
+    <div *ngIf="comments.length > 0">
+      <div *ngFor="let comment of comments" class="border-b py-2">
+        <p class="text-gray-800">{{ comment }}</p>
+      </div>
+    </div>
+    <div *ngIf="comments.length === 0" class="text-gray-600">
+      Nenhum comentário postado ainda.
+    </div>
+  </div>
+  

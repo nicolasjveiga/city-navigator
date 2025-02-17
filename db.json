@@ -1,0 +1,80 @@
+{
+  "usuarios": [
+    {
+      "id": "57b2",
+      "nome": "Nicolas",
+      "email": "nickjveiga@gmail.com"
+    },
+    {
+      "id": "2db9",
+      "nome": "Nicolas",
+      "email": "nicolasjveiga@gmail.com"
+    },
+    {
+      "id": "40db",
+      "nome": "Teste",
+      "email": "nickjveiga@gmail.com"
+    },
+    {
+      "id": "52f4",
+      "nome": "Teste Teste",
+      "email": "teste@gmail.com"
+    }
+  ],
+  "comments": [
+    {
+      "placeId": "123",
+      "content": "Lugar incrível!",
+      "user": "Nicolas",
+      "id": "ac35"
+    },
+    {
+      "id": "5575",
+      "placeId": "ChIJEXEdJX_fGGARd3bDjKp8Nxc",
+      "content": "Muito massa",
+      "user": "Usuário Logado"
+    },
+    {
+      "id": "9a67",
+      "placeId": "ChIJEXEdJX_fGGARd3bDjKp8Nxc",
+      "content": "Muito massa",
+      "user": "Usuário Logado"
+    },
+    {
+      "id": "d6d7",
+      "placeId": "ChIJ1zB926RhLxMRejWMj_tUs_c",
+      "content": "teste",
+      "user": "teste",
+      "rating": 5
+    },
+    {
+      "id": "5459",
+      "placeId": "ChIJ1zB926RhLxMRejWMj_tUs_c",
+      "content": "teste",
+      "user": "teste",
+      "rating": 4
+    },
+    {
+      "id": "09a0",
+      "placeId": "ChIJEXEdJX_fGGARd3bDjKp8Nxc",
+      "content": "Muito bonito!",
+      "user": "teste",
+      "rating": 5
+    },
+    {
+      "id": "36cc",
+      "placeId": "ChIJ1zB926RhLxMRejWMj_tUs_c",
+      "content": "Muito Bonito!",
+      "user": "teste",
+      "rating": 5
+    },
+    {
+      "id": "0359",
+      "placeId": "ChIJqUCGZ09gLxMRLM42IPpl0co",
+      "content": "Muito interessante!",
+      "user": "nickjveiga@gmail.com",
+      "rating": 4
+    }
+  ],
+  "lugaresFavoritos": []
+}
