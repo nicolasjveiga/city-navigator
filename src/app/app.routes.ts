@@ -17,4 +17,4 @@ export const routes: Routes = [
     { path: 'comments', component: CommentsComponent, canActivate: [AuthGuard] },
     { path: 'favoritos', component: FavoritesComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: '' }
-];
+];  
