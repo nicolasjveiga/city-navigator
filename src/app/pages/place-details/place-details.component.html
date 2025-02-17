@@ -1,9 +1,9 @@
 <div class="container mx-auto p-6">
   <h1 class="text-3xl text-black font-bold">{{ placeDetails?.name }}</h1>
 
-  <!-- Layout flex: informações e imagem -->
+ 
   <div class="flex flex-col md:flex-row mt-4">
-    <!-- Coluna da esquerda (informações) -->
+    
     <div class="md:w-2/3 md:pr-6">
       <div class="mt-4 md:mt-0">
         <h2 class="text-2xl text-black font-bold">Informações da Wikipedia</h2>
@@ -21,7 +21,7 @@
       </div>
     </div>
     
-    <!-- Coluna da direita (imagem) -->
+    
     <div class="md:w-1/3 mt-4 md:mt-0">
       <img 
         [src]="placeDetails?.photo" 
@@ -29,14 +29,14 @@
         class="w-full object-cover rounded-lg shadow-md"
       />
 
-      <!-- Botões abaixo da imagem -->
+      
       <div class="mt-4 flex justify-between">
-        <!-- Botão Favoritar -->
+       
         <button (click)="adicionarAosFavoritos(placeDetails)" class="w-full p-2 bg-ciano text-white rounded-lg shadow-md hover:bg-cyan-700">
           Favoritar
         </button>
         
-        <!-- Botão Google Street View -->
+        
         <button class="ml-2 w-full p-2 bg-ciano text-white rounded-lg shadow-md hover:bg-cyan-700" (click)="abrirStreetView(placeDetails?.latitude, placeDetails?.longitude)">
           Ver no Street View
         </button>
@@ -44,11 +44,10 @@
     </div>
   </div>
   
-  <!-- Seção de Comentários -->
+  
   <div class="mt-8">
     <h2 class="text-2xl text-black font-bold">Comentários</h2>
-    
-    <!-- Seção para avaliar com estrelas -->
+
     <div class="mt-4">
       <label class="text-black font-bold">Avaliação:</label>
       <div class="flex space-x-1 mt-1 text-yellow">
@@ -61,7 +60,6 @@
       </div>
     </div>
 
-    <!-- Formulário de comentário (apenas para usuários logados) -->
     <div *ngIf="isLoggedIn" class="mt-4">
       <textarea 
         [(ngModel)]="newComment" 
@@ -76,8 +74,7 @@
         Postar Comentário
       </button>
     </div>
-
-    <!-- Lista de Comentários -->
+   
     <div class="mt-6">
       <div *ngFor="let comment of comments" class="border-b py-3">
         <p class="text-black font-medium">{{ comment.content }}</p>

@@ -71,7 +71,7 @@ export class HomeComponent implements AfterViewInit {
       console.error("O place_id está indefinido para esse local:", place);
       return;
     }
-    // Adiciona a propriedade 'photo' à query string
+   
     window.location.href = `/place-details/${encodeURIComponent(place.place_id)}?name=${encodeURIComponent(place.name)}&photo=${encodeURIComponent(place.photo)}`;
   }
   

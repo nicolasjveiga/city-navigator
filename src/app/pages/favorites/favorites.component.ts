@@ -1,4 +1,3 @@
-// favorites.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavoritesService } from '../../services/favorite.service.service';
@@ -7,11 +6,11 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
-  standalone: true, // Certifique-se de que é um componente standalone
-  imports: [CommonModule, RouterLink], // Importe os módulos necessários
+  standalone: true, 
+  imports: [CommonModule, RouterLink], 
   templateUrl: './favorites.component.html',
 })
-export class FavoritesComponent implements OnInit { // Exporte o componente corretamente
+export class FavoritesComponent implements OnInit {
   favorites: any[] = [];
 
   constructor(

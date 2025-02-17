@@ -39,20 +39,17 @@ export class PlaceDetailsComponent implements OnInit {
 
     if (this.placeId && placeName) {
       this.fetchPlaceDetails(this.placeId, placeName, photo);
-      this.loadComments(); // Carrega os comentários do lugar
+      this.loadComments();
     }
 
-    // Verifica se o usuário está logado
     this.authService.isLoggedIn$.subscribe((isLogged) => {
       this.isLoggedIn = isLogged;
     });
 
-    // Carrega os favoritos do usuário, se estiver logado
     const user = this.authService.getUser();
     if (user) {
       this.favoritesService.loadFavorites(user.id);
       this.favoritesService.favorites$.subscribe((favorites) => {
-        // Verifica se o lugar atual está nos favoritos do usuário
         this.isFavorito = favorites.some((fav) => fav.placeId === this.placeId);
       });
     }
@@ -115,8 +112,8 @@ export class PlaceDetailsComponent implements OnInit {
     this.http.post('http://localhost:3000/comments', comment).subscribe(
       () => {
         this.newComment = '';
-        this.rating = 0; // Resetar a avaliação
-        this.loadComments(); // Atualizar os comentários
+        this.rating = 0; 
+        this.loadComments(); 
       },
       (error) => console.error('Erro ao postar comentário:', error)
     );
@@ -134,7 +131,7 @@ export class PlaceDetailsComponent implements OnInit {
       return;
     }
 
-    const placeId = place.id || place.placeId; // Use a propriedade correta
+    const placeId = place.id || place.placeId; 
     if (!placeId) {
       console.error('ID do lugar não encontrado.');
       return;
@@ -146,7 +143,7 @@ export class PlaceDetailsComponent implements OnInit {
         () => {
           this.isFavorito = false;
           console.log('Removido dos favoritos:', place);
-          this.favoritesService.loadFavorites(user.id); // Recarrega a lista de favoritos
+          this.favoritesService.loadFavorites(user.id);
         },
         (error) => console.error('Erro ao remover favorito:', error)
       );
@@ -156,7 +153,7 @@ export class PlaceDetailsComponent implements OnInit {
         () => {
           this.isFavorito = true;
           console.log('Adicionado aos favoritos:', place);
-          this.favoritesService.loadFavorites(user.id); // Recarrega a lista de favoritos
+          this.favoritesService.loadFavorites(user.id);
         },
         (error) => console.error('Erro ao adicionar favorito:', error)
       );
@@ -164,6 +161,6 @@ export class PlaceDetailsComponent implements OnInit {
   }
 
   goBack() {
-    window.history.back(); // Volta para a página anterior no histórico do navegador
+    window.history.back();
   }
 }

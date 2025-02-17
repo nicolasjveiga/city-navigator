@@ -1,4 +1,3 @@
-// comentarios.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service.service';
 import { Observable } from 'rxjs';
@@ -15,18 +14,16 @@ import { CommonModule } from '@angular/common';
 export class CommentsComponent implements OnInit {
   isLoggedIn!: Observable<boolean>;
   newComment: string = '';
-  comments: string[] = []; // Em uma aplicação real, isso seria um array de objetos com autor, data, etc.
+  comments: string[] = []; 
 
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {
-    // Assinamos o estado de login para exibir/esconder o formulário
     this.isLoggedIn = this.authService.isLoggedIn$;
     this.loadComments();
   }
 
   loadComments() {
-    // Carrega os comentários do db.json (ou de uma API)
     this.http.get<string[]>('http://localhost:3001/comments')
       .subscribe(
         data => this.comments = data,
@@ -36,7 +33,7 @@ export class CommentsComponent implements OnInit {
 
   postComment() {
     if (!this.newComment.trim()) return;
-    // Adiciona o comentário via POST (a API simulada com db.json)
+   
     this.http.post('http://localhost:3001/comments', { comment: this.newComment })
       .subscribe(
         () => {

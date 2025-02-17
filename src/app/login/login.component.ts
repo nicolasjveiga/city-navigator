@@ -1,4 +1,3 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service.service';
@@ -21,7 +20,6 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.username, this.password)
       .then(() => {
-        // Redireciona para a página de comentários após o login
         this.router.navigate(['/comentarios']);
       })
       .catch(() => {
