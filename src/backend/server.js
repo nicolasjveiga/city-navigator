@@ -50,25 +50,17 @@ async function fetchTouristAttractions(city) {
   }
 }
 
+app.get('/', (req, res) => {
+  res.send('API funcionando');
+});
 
-/*async function fetchWikipediaSummary(placeName) {
-  const url = `${WIKIPEDIA_API_URL}/${encodeURIComponent(placeName)}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.extract || "Nenhuma informação disponível na Wikipedia.";
-  } catch (error) {
-    console.error("Erro ao buscar informações da Wikipedia:", error);
-    return "Erro ao carregar informações da Wikipedia.";
-  }
-}*/
 
 async function fetchWikipediaExtract(placeName) {
   const url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=${encodeURIComponent(placeName)}&format=json&explaintext=0&origin=*`;
   try {
     const response = await fetch(url);
     const data = await response.json();
-    // A resposta vem em um objeto com uma chave 'query.pages'
+   
     const pages = data.query.pages;
     const pageId = Object.keys(pages)[0];
     if (pageId === "-1") {
@@ -83,7 +75,6 @@ async function fetchWikipediaExtract(placeName) {
 }
 
 
-// Endpoint para obter as atrações das top cidades
 app.get('/top-cities-attractions', async (req, res) => {
   const cacheKey = "topCities";
   const cachedData = cache.get(cacheKey);
@@ -95,13 +86,13 @@ app.get('/top-cities-attractions', async (req, res) => {
     const places = await fetchTouristAttractions(city);
     allPlaces = allPlaces.concat(places);
   }
-  // Aqui você pode limitar o número total de resultados
+
   allPlaces = allPlaces.sort((a, b) => b.rating - a.rating).slice(0, 8);
   cache.set(cacheKey, allPlaces);
   res.json({ places: allPlaces });
 });
 
-// Endpoint para buscar atrações de uma cidade específica
+
 app.get('/tourist-attractions/:city', async (req, res) => {
   const city = decodeURIComponent(req.params.city);
   const cacheKey = `tourist-attractions-${city}`;
@@ -141,10 +132,10 @@ app.get('/place-details/:place_id', async (req, res) => {
       phone: data.result.formatted_phone_number || "Telefone não disponível",
       website: data.result.website || "Site não disponível",
       opening_hours: data.result.opening_hours ? data.result.opening_hours.weekday_text : "Horário não disponível"
-      // Não usamos a descrição do Google
+      
     };
     
-    // Busca o extrato detalhado da Wikipedia
+  
     const wikipediaExtract = await fetchWikipediaExtract(placeDetails.name);
     placeDetails.description = wikipediaExtract;
     
