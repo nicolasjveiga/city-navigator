@@ -43,7 +43,7 @@ export class PerfilComponent {
 
 
     try {
-      const response = await this.http.post("http://localhost:3000/usuarios", newUser).toPromise();
+      const response = await this.http.post("http://localhost:3001/usuarios", newUser).toPromise();
       console.log("Usuário cadastrado com sucesso:", response);
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error);

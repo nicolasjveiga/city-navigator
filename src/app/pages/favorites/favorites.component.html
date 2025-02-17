@@ -1,0 +1,17 @@
+<!-- favorites.component.html -->
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold text-black mb-6">Meus Favoritos</h1>
+  <div *ngIf="favorites.length === 0" class="text-gray-600">
+    Nenhum favorito adicionado ainda.
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let favorite of favorites" class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 cursor-pointer">
+      <img [src]="favorite.photo" alt="{{ favorite.name }}" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h2 class="text-lg font-bold text-black">{{ favorite.name }}</h2>
+        <p class="text-sm text-gray-600">{{ favorite.address }}</p>
+        <a [routerLink]="['/place-details', favorite.placeId]" class="text-blue-500 hover:underline">Ver detalhes</a>
+      </div>
+    </div>
+  </div>
+</div>

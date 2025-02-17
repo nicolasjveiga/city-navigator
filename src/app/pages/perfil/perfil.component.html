@@ -77,26 +77,5 @@
         </button>
       </div>
     </form>
-
-    <div *ngIf="usuarios.length > 0" class="mt-8">
-      <h3 class="text-xl font-bold text-gray-800 mb-4">Usuários Cadastrados:</h3>
-      <ul>
-        <li
-          *ngFor="let usuario of usuarios; index as i"
-          class="flex justify-between items-center text-gray-700 border-b py-2"
-        >
-          <div>
-            <strong>Nome:</strong> {{ usuario.nome }} <br />
-            <strong>Email:</strong> {{ usuario.email }}
-          </div>
-          <button
-            class="text-red-500 hover:underline"
-            (click)="removeUser(i)"
-          >
-            Remover
-          </button>
-        </li>
-      </ul>
-    </div>
   </div>
 </div>

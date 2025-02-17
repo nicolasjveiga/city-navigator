@@ -14,12 +14,18 @@ declare var google: any;
 export class HomeComponent implements AfterViewInit {
   city: string = '';
   places: any[] = [];
+  paginatedPlaces: any[] = [];
   errorMessage: string = '';
+  
+  itemsPerPage: number = 8;
+  currentPage: number = 0; 
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
+      this.loadTopCitiesAttractions();
+      
       const input = document.getElementById('cityInput') as HTMLInputElement;
 
       if (!input) {
@@ -43,24 +49,57 @@ export class HomeComponent implements AfterViewInit {
         if (place && place.formatted_address) {
           this.city = place.formatted_address;
           console.log('Cidade selecionada:', this.city);
-          this.getTouristAttractions(this.city); // 🔹 Busca os locais turísticos
+          this.getTouristAttractions(this.city);
         }
       });
     }
   }
+  searchCity() {
+    const input = document.getElementById('cityInput') as HTMLInputElement;
+    if (input && input.value.trim() !== '') {
+      this.city = input.value.trim();
+      console.log('Buscando atrações para:', this.city);
+      this.getTouristAttractions(this.city);
+    } else {
+      console.warn('Nenhuma cidade inserida.');
+    }
+  }
+  
+  viewPlaceDetails(place: any) {
+    console.log("Place selecionado:", place);
+    if (!place.place_id) {
+      console.error("O place_id está indefinido para esse local:", place);
+      return;
+    }
+    // Adiciona a propriedade 'photo' à query string
+    window.location.href = `/place-details/${encodeURIComponent(place.place_id)}?name=${encodeURIComponent(place.name)}&photo=${encodeURIComponent(place.photo)}`;
+  }
+  
 
-  getStars(rating:number): number[]{
-    const stars = Math.round(rating);
-    return Array(stars).fill(0);
-
+  loadTopCitiesAttractions(){
+    fetch(`http://localhost:3000/top-cities-attractions`)
+      .then(response => response.json())
+      .then(data => {
+        this.places = data.places;
+        console.log("Dados carregado:", this.places);
+        this.currentPage = 0;
+        this.updatePaginatedPlaces();
+      })
+      .catch(error => {
+        console.error('Erro ao carregar as atrações principais:', error);
+        this.errorMessage = 'Erro ao carregar os melhores pontos turísticos.';
+      });
   }
 
   getTouristAttractions(city: string) {
-    fetch(`http://localhost:3000/tourist-attractions/${city}`)
+    const formatterCity = encodeURIComponent(city.trim());
+    fetch(`http://localhost:3000/tourist-attractions/${formatterCity}`)
       .then(response => response.json())
       .then(data => {
         if (data.places) {
           this.places = data.places;
+          this.currentPage = 0;
+          this.updatePaginatedPlaces();
           console.log("Lugares turísticos encontrados:", this.places);
         } else {
           this.errorMessage = 'Nenhum local encontrado.';
@@ -71,4 +110,44 @@ export class HomeComponent implements AfterViewInit {
         this.errorMessage = 'Erro ao carregar os lugares turísticos.';
       });
   }
+  getStars(rating: number): string[] {
+    console.log(rating);
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push('full');
+      } else if (i - 0.5 <= rating) {
+        stars.push('half'); 
+      } else {
+        stars.push('empty'); 
+      }
+    }
+    return stars;
+  }
+  
+
+
+  removePlace(index:number) {
+    this.paginatedPlaces = [...this.paginatedPlaces.slice(0, index), ...this.paginatedPlaces.slice(index + 1)];
+  }
+  updatePaginatedPlaces() {
+    const start = this.currentPage * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedPlaces = this.places.slice(start, end);
+  }
+
+  nextPage() {
+    if ((this.currentPage + 1) * this.itemsPerPage < this.places.length) {
+      this.currentPage++;
+      this.updatePaginatedPlaces();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePaginatedPlaces();
+    }
+  }
 }
+
