@@ -1,6 +1,8 @@
 # CityNavigator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+🔗 **Acesse o site:** [City Navigator no Netlify](https://soft-lolly-69cb72.netlify.app)
+🖥️ **Backend no Render:** [API do Projeto](https://seu-backend-no-render.com)
 
 ## Development server
 
