@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../enviroments/environment.prod';
 
 declare var google: any;
 
@@ -71,17 +72,16 @@ export class HomeComponent implements AfterViewInit {
       console.error("O place_id está indefinido para esse local:", place);
       return;
     }
-   
+
     window.location.href = `/place-details/${encodeURIComponent(place.place_id)}?name=${encodeURIComponent(place.name)}&photo=${encodeURIComponent(place.photo)}`;
   }
   
-
   loadTopCitiesAttractions(){
-    fetch(`http://localhost:3000/top-cities-attractions`)
+    fetch(`${environment.apiUrl}/top-cities-attractions`)
       .then(response => response.json())
       .then(data => {
         this.places = data.places;
-        console.log("Dados carregado:", this.places);
+        console.log("Dados carregados:", this.places);
         this.currentPage = 0;
         this.updatePaginatedPlaces();
       })
@@ -93,7 +93,7 @@ export class HomeComponent implements AfterViewInit {
 
   getTouristAttractions(city: string) {
     const formatterCity = encodeURIComponent(city.trim());
-    fetch(`http://localhost:3000/tourist-attractions/${formatterCity}`)
+    fetch(`${environment.apiUrl}/tourist-attractions/${formatterCity}`)
       .then(response => response.json())
       .then(data => {
         if (data.places) {
@@ -105,11 +105,12 @@ export class HomeComponent implements AfterViewInit {
           this.errorMessage = 'Nenhum local encontrado.';
         }
       })
-      .catch(error => {
-        console.error('Erro ao buscar locais turísticos:', error);
-        this.errorMessage = 'Erro ao carregar os lugares turísticos.';
-      });
+  .catch(error => {
+    console.error('Erro ao buscar locais turísticos:', error);
+    this.errorMessage = 'Erro ao carregar os lugares turísticos.';
+  });
   }
+  
   getStars(rating: number): string[] {
     console.log(rating);
     const stars = [];
@@ -125,8 +126,6 @@ export class HomeComponent implements AfterViewInit {
     return stars;
   }
   
-
-
   removePlace(index:number) {
     this.paginatedPlaces = [...this.paginatedPlaces.slice(0, index), ...this.paginatedPlaces.slice(index + 1)];
   }

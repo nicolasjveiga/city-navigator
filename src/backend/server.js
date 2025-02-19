@@ -22,7 +22,6 @@ const topCities = [
   "Barcelona, Spain"
 ];
 
-// Função para buscar atrações turísticas usando a Google Places API
 async function fetchTouristAttractions(city) {
   const encodedCity = encodeURIComponent(city);
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=top+tourist+attractions+in+${encodedCity}&key=${API_KEY}`;

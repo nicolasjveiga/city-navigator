@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FavoritesService } from '../../services/favorite.service.service';
+import { environment } from '../../../enviroments/environment.prod';
 
 @Component({
   selector: 'app-place-details',
@@ -60,9 +61,7 @@ export class PlaceDetailsComponent implements OnInit {
   }
 
   fetchPlaceDetails(placeId: string, placeName: string, photo?: string) {
-    const url = `http://localhost:3000/place-details/${placeId}?name=${encodeURIComponent(placeName)}`;
-    console.log('Buscando detalhes em:', url);
-    fetch(url)
+    fetch(`${environment.apiUrl}/place-details/${placeId}?name=${encodeURIComponent(placeName)}`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Dados recebidos:', data);
@@ -81,9 +80,9 @@ export class PlaceDetailsComponent implements OnInit {
   }
 
   loadComments() {
-    if (!this.placeId) return;
+    if (!this.placeId) return; 
     this.http
-      .get<any[]>(`http://localhost:3000/comments?placeId=${this.placeId}`)
+      .get<any[]>(`${environment.apiUrl}/comments?placeId=${this.placeId}`)
       .subscribe(
         (data) => (this.comments = data),
         (error) => console.error('Erro ao carregar comentários:', error)
@@ -109,11 +108,12 @@ export class PlaceDetailsComponent implements OnInit {
       rating: this.rating,
     };
 
-    this.http.post('http://localhost:3000/comments', comment).subscribe(
+    this.http.post(`${environment.apiUrl}/comments`, comment).subscribe( 
       () => {
         this.newComment = '';
-        this.rating = 0; 
-        this.loadComments(); 
+        this.rating = 0;
+        this.loadComments();
+
       },
       (error) => console.error('Erro ao postar comentário:', error)
     );
@@ -130,15 +130,13 @@ export class PlaceDetailsComponent implements OnInit {
       console.error('Usuário não está logado.');
       return;
     }
-
-    const placeId = place.id || place.placeId; 
+    const placeId = place.id || place.placeId;
     if (!placeId) {
       console.error('ID do lugar não encontrado.');
       return;
     }
 
     if (this.isFavorito) {
-      // Remove dos favoritos
       this.favoritesService.removeFavorite(placeId).subscribe(
         () => {
           this.isFavorito = false;
@@ -148,7 +146,6 @@ export class PlaceDetailsComponent implements OnInit {
         (error) => console.error('Erro ao remover favorito:', error)
       );
     } else {
-      // Adiciona aos favoritos
       this.favoritesService.addFavorite(user.id, place).subscribe(
         () => {
           this.isFavorito = true;

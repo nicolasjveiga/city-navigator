@@ -6,8 +6,8 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
-  standalone: true, 
-  imports: [CommonModule, RouterLink], 
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './favorites.component.html',
 })
 export class FavoritesComponent implements OnInit {

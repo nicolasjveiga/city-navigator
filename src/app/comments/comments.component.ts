@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
 export class CommentsComponent implements OnInit {
   isLoggedIn!: Observable<boolean>;
   newComment: string = '';
-  comments: string[] = []; 
+
+  comments: string[] = [];
 
   constructor(private authService: AuthService, private http: HttpClient) {}
 
@@ -33,7 +34,6 @@ export class CommentsComponent implements OnInit {
 
   postComment() {
     if (!this.newComment.trim()) return;
-   
     this.http.post('http://localhost:3001/comments', { comment: this.newComment })
       .subscribe(
         () => {

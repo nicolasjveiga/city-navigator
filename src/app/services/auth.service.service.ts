@@ -12,7 +12,6 @@ export class AuthService {
   user$ = this.currentUser.asObservable();
 
   constructor() {
-    
     if (this.isBrowser()) {
       const user = localStorage.getItem('user');
       if (user) {
@@ -32,7 +31,8 @@ export class AuthService {
         const userData = { username };
         if (this.isBrowser()) {
           localStorage.setItem('user', JSON.stringify(userData));
-          console.log('Usuário salvo no localStorage:', userData);  
+          console.log('Usuário salvo no localStorage:', userData);
+
         }
         this.loggedIn.next(true);
         this.currentUser.next(userData);
@@ -52,7 +52,7 @@ export class AuthService {
   }
   getUser() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user; 
+    return user;
   }
   
   
